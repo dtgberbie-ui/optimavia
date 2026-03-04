@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OptimaVia — Making Work Seamless for Home Care Agencies</title>
+
+  <style>
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=Mulish:wght@300;400;500;600;700&display=swap");
+
+/* ── Reset & Variables ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:        #0B2545;
+  --navy-deep:   #071A33;
+  --teal:        #0D9488;
+  --teal-light:  #14B8A6;
+  --mint:        #CCFBF1;
+  --cream:       #F8FAFC;
+  --white:       #FFFFFF;
+  --ink:         #0F172A;
+  --ink-mid:     #334155;
+  --ink-muted:   #64748B;
+  --ink-faint:   #94A3B8;
+  --border:      rgba(0,0,0,0.08);
+  --red:         #EF4444;
+  --amber:       #F59E0B;
+  --green:       #10B981;
+  --purple:      #7C3AED;
+  --radius:      16px;
+  --radius-lg:   24px;
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md:   0 8px 32px rgba(0,0,0,0.1);
+  --shadow-lg:   0 24px 64px rgba(0,0,0,0.14);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Mulish', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* Noise overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.4;
+}
+
+.container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
+h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.12; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2.6rem, 5.5vw, 4.6rem); font-weight: 900; }
+h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; }
+h3 { font-size: 1.4rem; font-weight: 700; }
+h4 { font-size: 1.1rem; font-weight: 700; font-family: 'Mulish', sans-serif; }
+p  { font-weight: 400; }
+
+em { font-style: italic; }
+
+/* ── Pills ──────────────────────────────────────────────────────────────── */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; padding: 6px 14px; border-radius: 100px;
+  margin-bottom: 18px;
+}
+.pill-teal   { background: rgba(13,148,136,0.12); color: var(--teal); border: 1px solid rgba(13,148,136,0.25); }
+.pill-amber  { background: rgba(245,158,11,0.1);  color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+.pill-purple { background: rgba(124,58,237,0.1);  color: var(--purple); border: 1px solid rgba(124,58,237,0.25); }
+.pill-mint   { background: rgba(204,251,241,0.15); color: var(--mint); border: 1px solid rgba(204,251,241,0.3); }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--teal); color: var(--white);
+  padding: 14px 28px; border-radius: 10px;
+  font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 700;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(13,148,136,0.35);
+}
+.btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(13,148,136,0.4); }
+.btn-primary.full-width { width: 100%; justify-content: center; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; color: rgba(255,255,255,0.75);
+  padding: 14px 28px; border-radius: 10px;
+  font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 600;
+  text-decoration: none; border: 1.5px solid rgba(255,255,255,0.2);
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: white; }
+
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--teal);
+  padding: 13px 28px; border-radius: 10px;
+  font-family: 'Mulish', sans-serif; font-size: 0.95rem; font-weight: 700;
+  text-decoration: none; border: 2px solid var(--teal);
+  transition: background 0.2s, color 0.2s;
+  width: 100%;
+}
+.btn-outline:hover { background: var(--teal); color: white; }
+
+/* ── Section headers ─────────────────────────────────────────────────────── */
+.section-header { margin-bottom: 60px; }
+.section-header.centered { text-align: center; }
+.section-header.centered .section-sub { margin: 0 auto; }
+.section-sub { font-size: 1.05rem; color: var(--ink-muted); font-weight: 300; max-width: 560px; line-height: 1.75; margin-top: 12px; }
+
+/* ── Reveal animation ───────────────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════════════════════════════════ */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(11,37,69,0.92); backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: box-shadow 0.3s;
+}
+#nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.25); }
+
+.nav-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 32px;
+  height: 68px; display: flex; align-items: center; justify-content: space-between;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: 1.4rem; color: white; text-decoration: none; letter-spacing: -0.02em;
+}
+.logo span { color: var(--teal); }
+
+.nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+.nav-links a { font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: white; }
+.nav-btn {
+  background: var(--teal) !important; color: white !important;
+  padding: 8px 20px; border-radius: 8px; font-weight: 700 !important;
+  transition: background 0.2s !important;
+}
+.nav-btn:hover { background: var(--teal-light) !important; }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; }
+
+.mobile-menu {
+  display: none; flex-direction: column; gap: 0;
+  background: var(--navy-deep); border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 8px 0 16px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { padding: 12px 32px; font-size: 0.95rem; font-weight: 600; color: rgba(255,255,255,0.7); text-decoration: none; }
+.mobile-menu a:hover { color: white; background: rgba(255,255,255,0.05); }
+.mobile-btn { color: var(--teal) !important; font-weight: 700 !important; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh; background: var(--navy);
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 60px;
+  padding: 120px 32px 80px;
+  max-width: 1160px; margin: 0 auto;
+  position: relative; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+
+/* Full bleed navy background behind hero */
+.hero::before {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; height: 100vh;
+  background: var(--navy); z-index: -1;
+}
+
+body > section:first-of-type {
+  background: var(--navy);
+}
+
+.hero-section-bg {
+  background: var(--navy);
+  position: relative;
+  padding-top: 0;
+}
+
+.hero-orb {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  filter: blur(80px);
+}
+.orb1 { width: 500px; height: 500px; background: rgba(13,148,136,0.12); top: -100px; right: -100px; }
+.orb2 { width: 350px; height: 350px; background: rgba(124,58,237,0.08); bottom: 0; left: -50px; }
+
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+}
+
+.hero-content { z-index: 2; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(13,148,136,0.12); border: 1px solid rgba(13,148,136,0.3);
+  color: var(--teal-light); font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 7px 16px; border-radius: 100px; margin-bottom: 28px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.badge-dot {
+  width: 7px; height: 7px; background: var(--teal); border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(1.4); } }
+
+.hero-title {
+  color: white; margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-title em { color: var(--teal-light); font-style: italic; }
+
+.hero-sub {
+  font-size: 1.1rem; color: rgba(255,255,255,0.65); font-weight: 300;
+  max-width: 520px; line-height: 1.75; margin-bottom: 40px;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.hero-proof {
+  display: flex; align-items: center; gap: 14px;
+  color: rgba(255,255,255,0.5); font-size: 0.875rem;
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+.hero-proof strong { color: white; }
+
+.proof-avatars { display: flex; }
+.av {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--navy); margin-left: -10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 800; color: white;
+}
+.av:first-child { margin-left: 0; }
+.av1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+.av2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.av3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.av4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+
+/* Hero card */
+.hero-card-wrap { z-index: 2; animation: fadeUp 0.8s 0.5s ease both; }
+
+.hero-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 24px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06) inset;
+}
+
+.card-topbar { display: flex; align-items: center; gap: 7px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.mac-dot { width: 11px; height: 11px; border-radius: 50%; }
+.mac-dot.red    { background: #ff5f57; }
+.mac-dot.yellow { background: #febc2e; }
+.mac-dot.green  { background: #28c840; }
+.card-title-bar { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-left: 6px; }
+
+.card-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 18px; }
+.cstat { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 14px 12px; border: 1px solid rgba(255,255,255,0.06); }
+.cstat-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: white; letter-spacing: -0.02em; }
+.cstat-val.teal { color: var(--teal-light); }
+.cstat-lbl { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.cstat-sub { font-size: 0.72rem; font-weight: 600; margin-top: 4px; }
+.cstat-sub.covered { color: var(--teal-light); }
+.cstat-sub.green   { color: #34d399; }
+
+.card-chart-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.card-bar-wrap { display: flex; align-items: flex-end; gap: 6px; height: 64px; margin-bottom: 16px; }
+.card-bar {
+  flex: 1; height: var(--h); border-radius: 3px 3px 0 0;
+  background: var(--teal); opacity: 0.25;
+  animation: growBar 1s ease both;
+}
+.card-bar.hi { opacity: 1; }
+@keyframes growBar { from { transform: scaleY(0); transform-origin: bottom; } to { transform: scaleY(1); transform-origin: bottom; } }
+.card-bar:nth-child(1) { animation-delay: 0.1s; }
+.card-bar:nth-child(2) { animation-delay: 0.15s; }
+.card-bar:nth-child(3) { animation-delay: 0.2s; }
+.card-bar:nth-child(4) { animation-delay: 0.25s; }
+.card-bar:nth-child(5) { animation-delay: 0.3s; }
+.card-bar:nth-child(6) { animation-delay: 0.35s; }
+.card-bar:nth-child(7) { animation-delay: 0.4s; }
+
+.card-alert {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(13,148,136,0.12); border: 1px solid rgba(13,148,136,0.25);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 0.8rem; color: var(--teal-light);
+}
+.alert-dot { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; animation: pulse 1.5s infinite; }
+
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.3); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  z-index: 2;
+}
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STRIP
+══════════════════════════════════════════════════════════════════════════ */
+.strip { background: var(--navy-deep); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 32px 0; }
+.strip-inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.strip-stat { display: flex; align-items: center; gap: 14px; }
+.snum { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--teal-light); letter-spacing: -0.03em; }
+.slbl { font-size: 0.82rem; color: rgba(255,255,255,0.45); max-width: 140px; line-height: 1.4; }
+.strip-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.1); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PROBLEM
+══════════════════════════════════════════════════════════════════════════ */
+.problem-section { padding: 110px 0; background: var(--cream); }
+
+/* Story block */
+.story-block {
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 70px;
+  align-items: center; margin-bottom: 80px;
+}
+
+.story-phone { position: relative; display: flex; justify-content: center; }
+
+.phone-frame {
+  width: 260px; background: #1a1a2e; border-radius: 36px;
+  padding: 16px; box-shadow: 0 40px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.08) inset;
+  position: relative; z-index: 2;
+}
+.phone-notch { width: 90px; height: 22px; background: #0d0d1a; border-radius: 0 0 16px 16px; margin: 0 auto 14px; }
+.phone-screen { background: #f2f2f7; border-radius: 20px; padding: 0 0 16px; overflow: hidden; }
+
+.sms-header { background: #f9f9f9; padding: 12px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e5e5ea; }
+.sms-avatar { width: 36px; height: 36px; background: #aeaeb2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: white; flex-shrink: 0; }
+.sms-name { font-size: 0.78rem; font-weight: 700; color: #1c1c1e; }
+.sms-time { font-size: 0.65rem; color: #8e8e93; }
+.sms-body { padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; }
+.sms-bubble { font-size: 0.78rem; line-height: 1.5; padding: 10px 13px; border-radius: 16px; max-width: 90%; }
+.sms-bubble.incoming { background: #e5e5ea; color: #1c1c1e; align-self: flex-start; border-bottom-left-radius: 4px; }
+.sms-bubble.outgoing { background: #007aff; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+
+.phone-glow { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); width: 200px; height: 60px; background: radial-gradient(ellipse, rgba(13,148,136,0.3), transparent); pointer-events: none; }
+
+.story-copy h3 { font-size: 2rem; margin-bottom: 16px; }
+.story-copy p { color: var(--ink-mid); font-size: 1rem; margin-bottom: 14px; }
+.story-emphasis { font-size: 1.1rem !important; font-weight: 700 !important; color: var(--ink) !important; border-left: 3px solid var(--teal); padding-left: 16px; }
+
+.story-stats { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+.sstат { text-align: center; }
+.sstat-n { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; }
+.sstat-n.red   { color: var(--red); }
+.sstat-n.amber { color: var(--amber); }
+.sstat-n.teal  { color: var(--teal); }
+.sstat-l { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.4; }
+
+/* Problem cards */
+.prob-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.prob-card {
+  background: white; border-radius: var(--radius); padding: 28px 24px;
+  border: 1.5px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.prob-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: transparent; }
+.prob-icon {
+  width: 48px; height: 48px; border-radius: 12px; font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+  background: color-mix(in srgb, var(--ic) 12%, white);
+}
+.prob-card h4 { margin-bottom: 10px; }
+.prob-card p  { font-size: 0.88rem; color: var(--ink-mid); line-height: 1.65; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SOLUTION
+══════════════════════════════════════════════════════════════════════════ */
+.solution-section { padding: 110px 0; background: var(--navy); position: relative; overflow: hidden; }
+.solution-bg { position: absolute; inset: 0; pointer-events: none; }
+.sol-orb { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: rgba(13,148,136,0.07); top: -100px; right: -200px; filter: blur(100px); }
+
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feat-large { grid-column: span 2; }
+
+.feat-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius); padding: 32px 28px;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.feat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--card-line, var(--teal)); opacity: 0; transition: opacity 0.2s;
+}
+.feat-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.14); transform: translateY(-3px); }
+.feat-card:hover::before { opacity: 1; }
+
+.feat-icon-wrap {
+  width: 52px; height: 52px; border-radius: 14px; font-size: 1.5rem;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+}
+.teal-icon   { background: rgba(13,148,136,0.15); }
+.amber-icon  { background: rgba(245,158,11,0.12); }
+.purple-icon { background: rgba(124,58,237,0.12); }
+.green-icon  { background: rgba(16,185,129,0.12); }
+
+.feat-card h3 { color: white; font-size: 1.15rem; margin-bottom: 10px; }
+.feat-card p  { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+.feat-list { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+.feat-list li { font-size: 0.85rem; color: rgba(255,255,255,0.5); padding-left: 18px; position: relative; }
+.feat-list li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-size: 0.8rem; }
+.feat-tag { display: inline-flex; margin-top: 18px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; background: rgba(13,148,136,0.15); color: var(--teal-light); border: 1px solid rgba(13,148,136,0.2); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HOW IT WORKS
+══════════════════════════════════════════════════════════════════════════ */
+.how-section { padding: 110px 0; background: white; }
+
+.steps-wrap { position: relative; margin-bottom: 70px; }
+.steps-line { position: absolute; top: 28px; left: calc(28px + 40px); right: calc(28px + 40px); height: 2px; background: linear-gradient(to right, var(--teal), rgba(13,148,136,0.2)); z-index: 0; }
+
+.steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; position: relative; z-index: 1; }
+.step { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--teal); color: white;
+  font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px; flex-shrink: 0;
+  box-shadow: 0 0 0 8px rgba(13,148,136,0.12);
+}
+.step-content h4 { margin-bottom: 8px; }
+.step-content p  { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; }
+
+.results-bar {
+  background: var(--navy); border-radius: var(--radius-lg); padding: 40px 50px;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 20px;
+}
+.result-item { text-align: center; }
+.result-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: var(--teal-light); letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px; }
+.result-lbl { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+.result-divider { width: 1px; background: rgba(255,255,255,0.08); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PRICING
+══════════════════════════════════════════════════════════════════════════ */
+.pricing-section { padding: 110px 0; background: var(--cream); }
+.price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-bottom: 32px; }
+
+.price-card {
+  background: white; border-radius: var(--radius-lg); padding: 40px 32px;
+  border: 1.5px solid var(--border); position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.price-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+.price-featured { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
+
+.price-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--teal); color: white; font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 16px; border-radius: 100px;
+  white-space: nowrap;
+}
+
+.price-tier { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 12px; }
+.price-amount { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-weight: 900; letter-spacing: -0.04em; color: var(--ink); line-height: 1; margin-bottom: 6px; }
+.price-dollar { font-size: 1.6rem; vertical-align: top; margin-top: 8px; display: inline-block; }
+.price-per { font-size: 1rem; color: var(--ink-muted); font-family: 'Mulish', sans-serif; font-weight: 400; }
+.price-desc { font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.price-features li { font-size: 0.875rem; color: var(--ink-mid); }
+
+.price-note { text-align: center; font-size: 0.9rem; color: var(--ink-muted); background: rgba(13,148,136,0.06); border: 1px solid rgba(13,148,136,0.15); border-radius: 10px; padding: 14px 20px; }
+.price-note strong { color: var(--teal); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VISION
+══════════════════════════════════════════════════════════════════════════ */
+.vision-section { padding: 110px 0; background: linear-gradient(135deg, #1e1e3a 0%, #0B2545 100%); }
+.vision-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+
+.vision-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg); padding: 36px 30px;
+  transition: background 0.2s, transform 0.2s;
+}
+.vision-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-4px); }
+.vision-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.vision-card h4 { color: white; font-size: 1.1rem; margin-bottom: 8px; }
+.vision-card p  { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+.vision-status { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+.active-status  { color: var(--teal-light); }
+.coming-status  { color: var(--amber); }
+.future-status  { color: var(--purple); filter: brightness(1.4); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ABOUT
+══════════════════════════════════════════════════════════════════════════ */
+.about-section { padding: 110px 0; background: var(--cream); }
+.about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+.about-copy h2 { margin-bottom: 20px; }
+.about-copy h2 em { color: var(--teal); }
+.about-copy p { color: var(--ink-mid); font-size: 1rem; margin-bottom: 16px; line-height: 1.75; }
+
+.about-values { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+.value-item { display: flex; gap: 16px; align-items: flex-start; }
+.value-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+.value-item strong { font-size: 0.95rem; display: block; margin-bottom: 4px; }
+.value-item p { font-size: 0.85rem; color: var(--ink-muted); margin: 0; }
+
+.founder-card {
+  background: var(--navy); border-radius: var(--radius-lg); padding: 36px 32px;
+  box-shadow: var(--shadow-lg);
+}
+.founder-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), #7C3AED);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900;
+  color: white; margin-bottom: 16px;
+}
+.founder-info { margin-bottom: 20px; }
+.founder-name  { font-weight: 800; font-size: 1rem; color: white; }
+.founder-title { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
+.founder-quote {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 1rem; color: var(--mint); line-height: 1.65;
+  border-left: 3px solid var(--teal); padding-left: 16px; margin-bottom: 24px;
+}
+.founder-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.founder-tags span {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 6px;
+  background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   WAITLIST
+══════════════════════════════════════════════════════════════════════════ */
+.waitlist-section { padding: 110px 0; background: var(--navy); position: relative; overflow: hidden; }
+.wl-orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(90px); }
+.wl-orb1 { width: 500px; height: 500px; background: rgba(13,148,136,0.1); top: -100px; left: -150px; }
+.wl-orb2 { width: 400px; height: 400px; background: rgba(124,58,237,0.08); bottom: -100px; right: -100px; }
+
+.waitlist-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; position: relative; z-index: 2; }
+
+.wl-copy h2 { color: white; margin-bottom: 20px; }
+.wl-copy h2 em { color: var(--teal-light); }
+.wl-copy > p { color: rgba(255,255,255,0.6); font-size: 1rem; line-height: 1.75; margin-bottom: 28px; }
+
+.wl-perks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 32px; }
+.wl-perk { font-size: 0.875rem; color: var(--mint); font-weight: 500; }
+
+.urgency-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.urgency-fill { height: 100%; background: linear-gradient(to right, var(--teal), var(--teal-light)); border-radius: 3px; transition: width 1s ease; }
+.urgency-text { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+
+.wl-form-wrap { position: relative; }
+.wl-form {
+  background: white; border-radius: var(--radius-lg); padding: 40px 36px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+}
+.wl-form h3 { font-size: 1.4rem; margin-bottom: 28px; color: var(--ink); }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--ink-mid); margin-bottom: 6px; letter-spacing: 0.02em; }
+.form-group input,
+.form-group select {
+  width: 100%; padding: 12px 16px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: 'Mulish', sans-serif; font-size: 0.9rem; color: var(--ink);
+  background: var(--cream); outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+}
+.form-group input:focus,
+.form-group select:focus { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(13,148,136,0.12); }
+.form-note { font-size: 0.78rem; color: var(--ink-faint); text-align: center; margin-top: 12px; }
+
+.wl-success {
+  display: none; background: white; border-radius: var(--radius-lg);
+  padding: 60px 36px; text-align: center;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+}
+.wl-success.show { display: block; }
+.success-icon { font-size: 3.5rem; margin-bottom: 16px; }
+.wl-success h3 { font-size: 1.6rem; margin-bottom: 10px; }
+.wl-success p  { color: var(--ink-muted); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════════════════════ */
+footer { background: var(--navy-deep); color: rgba(255,255,255,0.4); }
+
+.footer-inner {
+  padding: 70px 32px 50px; display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+}
+
+.footer-brand .logo { font-size: 1.3rem; display: block; margin-bottom: 12px; }
+.footer-brand p { font-size: 0.85rem; line-height: 1.65; max-width: 240px; margin-bottom: 20px; }
+.footer-socials { display: flex; flex-wrap: wrap; gap: 16px; }
+.footer-socials a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+.footer-socials a:hover { color: var(--teal-light); }
+
+.footer-links-group { display: flex; flex-direction: column; gap: 10px; }
+.footer-links-group h5 { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+.footer-links-group a { font-size: 0.85rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+.footer-links-group a:hover { color: var(--teal-light); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06); padding: 20px 32px;
+}
+.footer-bottom .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 0.8rem; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding-top: 130px; }
+  .hero-card-wrap { max-width: 500px; margin: 0 auto; }
+  .hero-scroll { display: none; }
+  .feat-grid { grid-template-columns: repeat(2,1fr); }
+  .feat-large { grid-column: span 2; }
+  .about-grid, .waitlist-inner { grid-template-columns: 1fr; gap: 48px; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .container { padding: 0 20px; }
+  section { padding: 70px 0 !important; }
+  .story-block { grid-template-columns: 1fr; gap: 40px; }
+  .prob-grid { grid-template-columns: 1fr 1fr; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .feat-large { grid-column: span 1; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .steps-line { display: none; }
+  .results-bar { grid-template-columns: 1fr 1fr; padding: 28px; }
+  .result-divider { display: none; }
+  .price-grid { grid-template-columns: 1fr; }
+  .vision-grid { grid-template-columns: 1fr; }
+  .strip-inner { justify-content: center; gap: 24px; }
+  .strip-divider { display: none; }
+  .wl-perks { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .prob-grid  { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions a { width: 100%; justify-content: center; }
+  .card-stats { grid-template-columns: 1fr 1fr; }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ─────────────────────────────────────────────────────────────── -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo">Optima<span>Via</span></a>
+      <ul class="nav-links">
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#solution">Solution</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#waitlist" class="nav-btn">Join Beta →</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a href="#waitlist" class="mobile-btn">Join Beta →</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-orb orb1"></div>
+      <div class="hero-orb orb2"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Now Accepting Beta Applications
+      </div>
+      <h1 class="hero-title">
+        Making Work Seamless<br>
+        <em>for Home Care Agencies</em>
+      </h1>
+      <p class="hero-sub">
+        OptimaVia is the AI-powered operations platform that eliminates scheduling chaos,
+        reduces caregiver burnout, and ensures every patient gets the care they need —
+        every single day.
+      </p>
+      <div class="hero-actions">
+        <a href="#waitlist" class="btn-primary">Get Early Access <span class="arrow">→</span></a>
+        <a href="#how-it-works" class="btn-ghost">See how it works</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-avatars">
+          <div class="av av1">JM</div>
+          <div class="av av2">KL</div>
+          <div class="av av3">RP</div>
+          <div class="av av4">TS</div>
+        </div>
+        <p><strong>240+ agency owners</strong> already on the waitlist</p>
+      </div>
+    </div>
+
+    <!-- Floating dashboard card -->
+    <div class="hero-card-wrap">
+      <div class="hero-card">
+        <div class="card-topbar">
+          <div class="mac-dot red"></div>
+          <div class="mac-dot yellow"></div>
+          <div class="mac-dot green"></div>
+          <span class="card-title-bar">OptimaVia Dashboard</span>
+        </div>
+        <div class="card-stats">
+          <div class="cstat">
+            <div class="cstat-val teal">142h</div>
+            <div class="cstat-lbl">Scheduled</div>
+            <div class="cstat-sub covered">✓ Fully covered</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-val">3</div>
+            <div class="cstat-lbl">Open Shifts</div>
+            <div class="cstat-sub green">↑ 2 matched</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-val">$28.4k</div>
+            <div class="cstat-lbl">Revenue</div>
+            <div class="cstat-sub green">↑ 12% MoM</div>
+          </div>
+        </div>
+        <div class="card-chart-label">Shift Coverage Rate</div>
+        <div class="card-bar-wrap">
+          <div class="card-bar" style="--h:45%"></div>
+          <div class="card-bar" style="--h:62%"></div>
+          <div class="card-bar" style="--h:55%"></div>
+          <div class="card-bar" style="--h:78%"></div>
+          <div class="card-bar" style="--h:65%"></div>
+          <div class="card-bar hi" style="--h:92%"></div>
+          <div class="card-bar hi" style="--h:97%"></div>
+        </div>
+        <div class="card-alert">
+          <div class="alert-dot"></div>
+          <span>AI matched 2 caregivers to tomorrow's gap</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── SOCIAL PROOF STRIP ───────────────────────────────────────────────── -->
+  <div class="strip">
+    <div class="strip-inner">
+      <div class="strip-stat"><span class="snum">79%</span><span class="slbl">of caregivers leave within 100 days</span></div>
+      <div class="strip-divider"></div>
+      <div class="strip-stat"><span class="snum">$28B</span><span class="slbl">lost annually from missed visits</span></div>
+      <div class="strip-divider"></div>
+      <div class="strip-stat"><span class="snum">33K+</span><span class="slbl">home health agencies in the US</span></div>
+      <div class="strip-divider"></div>
+      <div class="strip-stat"><span class="snum">47%</span><span class="slbl">more Americans 65+ by 2050</span></div>
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ──────────────────────────────────────────────────────────── -->
+  <section class="problem-section" id="problem">
+    <div class="container">
+      <div class="section-header centered">
+        <div class="pill pill-amber">The Problem</div>
+        <h2>A Crisis Hiding in Plain Sight</h2>
+        <p class="section-sub">Home care agencies aren't failing from lack of compassion. They're failing from broken operations.</p>
+      </div>
+
+      <!-- Story block -->
+      <div class="story-block">
+        <div class="story-phone">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="sms-header">
+                <div class="sms-avatar">HC</div>
+                <div>
+                  <div class="sms-name">Home Care Agency</div>
+                  <div class="sms-time">Today 8:57 AM</div>
+                </div>
+              </div>
+              <div class="sms-body">
+                <div class="sms-bubble incoming">
+                  "Sorry, our caregiver had an emergency, and we cannot find a replacement in time. <strong>We are unable to send anyone today.</strong>"
+                </div>
+                <div class="sms-bubble outgoing">
+                  What?? She has dementia. I cannot leave her alone! 😰
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-glow"></div>
+        </div>
+        <div class="story-copy">
+          <h3>Meet Sarah.</h3>
+          <p>She lives in Morrisville, NC. Her grandmother has dementia and relies on a home caregiver every morning. This text arrived at 8:57 AM — 3 minutes before Sarah was supposed to leave for work.</p>
+          <p>She had two choices: leave her grandmother alone, or call in an emergency and risk her job.</p>
+          <p class="story-emphasis">This happens to hundreds of American families every single day.</p>
+          <div class="story-stats">
+            <div class="sstат">
+              <div class="sstat-n red">79%</div>
+              <div class="sstat-l">caregivers leave<br>within 100 days</div>
+            </div>
+            <div class="sstат">
+              <div class="sstat-n amber">25%</div>
+              <div class="sstat-l">of shifts go<br>unfilled each week</div>
+            </div>
+            <div class="sstат">
+              <div class="sstat-n teal">$3,500</div>
+              <div class="sstat-l">cost to replace<br>one caregiver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem cards -->
+      <div class="prob-grid">
+        <div class="prob-card reveal">
+          <div class="prob-icon" style="--ic: #EF4444">⚡</div>
+          <h4>Last-Minute Cancellations</h4>
+          <p>Coordinators spend 4–6 hours per day making phone calls to fill gaps. One cancellation can cascade into 10 calls and still go unfilled.</p>
+        </div>
+        <div class="prob-card reveal">
+          <div class="prob-icon" style="--ic: #F59E0B">🔥</div>
+          <h4>Caregiver Burnout</h4>
+          <p>Unpredictable schedules and feeling undervalued push caregivers to quit. 79% leave within 100 days — and every exit costs $3,500–$5,000 to replace.</p>
+        </div>
+        <div class="prob-card reveal">
+          <div class="prob-icon" style="--ic: #0D9488">💸</div>
+          <h4>Revenue Leakage</h4>
+          <p>Every unfilled shift is direct lost revenue. Missed visits breach care plans, create compliance risk, and erode the trust families place in your agency.</p>
+        </div>
+        <div class="prob-card reveal">
+          <div class="prob-icon" style="--ic: #7C3AED">📈</div>
+          <h4>A Crisis Getting Worse</h4>
+          <p>By 2050, there will be 47% more Americans over 65. The current shortage will deepen — agencies that don't modernize operations won't survive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOLUTION / FEATURES ──────────────────────────────────────────────── -->
+  <section class="solution-section" id="solution">
+    <div class="solution-bg">
+      <div class="sol-orb"></div>
+    </div>
+    <div class="container">
+      <div class="section-header centered">
+        <div class="pill pill-teal">The Solution</div>
+        <h2 style="color:#fff">One Platform. Zero Scheduling Chaos.</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.65)">OptimaVia acts as an always-on AI operations co-pilot for your agency — handling the work that burns out your coordinators every day.</p>
+      </div>
+
+      <div class="feat-grid">
+
+        <div class="feat-card feat-large reveal">
+          <div class="feat-icon-wrap teal-icon">🤖</div>
+          <h3>Intelligent Shift Matching</h3>
+          <p>When a caregiver cancels, OptimaVia instantly identifies the best qualified replacement based on proximity, availability, patient preferences, and reliability score — and sends them a push notification. No coordinator calls required.</p>
+          <ul class="feat-list">
+            <li>Proximity-based routing</li>
+            <li>Qualification & certification matching</li>
+            <li>One-tap caregiver confirmation</li>
+          </ul>
+          <div class="feat-tag">Core Feature — V1</div>
+        </div>
+
+        <div class="feat-card reveal">
+          <div class="feat-icon-wrap amber-icon">🔔</div>
+          <h3>Real-Time Mobile Alerts</h3>
+          <p>Caregivers receive instant shift notifications on their phone. Agencies get live confirmation status — no chasing, no uncertainty.</p>
+          <div class="feat-tag">Core Feature — V1</div>
+        </div>
+
+        <div class="feat-card reveal">
+          <div class="feat-icon-wrap purple-icon">⭐</div>
+          <h3>Reliability Ratings</h3>
+          <p>Every caregiver builds a star rating based on attendance, punctuality, and patient satisfaction. Better ratings unlock preferred shifts — incentivizing reliability.</p>
+          <div class="feat-tag">Core Feature — V1</div>
+        </div>
+
+        <div class="feat-card reveal">
+          <div class="feat-icon-wrap green-icon">🧠</div>
+          <h3>Predictive Staffing Intelligence</h3>
+          <p>OptimaVia flags staffing risks 48–72 hours before they become crises — identifying coverage gaps and at-risk caregivers before shifts fail.</p>
+          <div class="feat-tag">Coming Soon</div>
+        </div>
+
+        <div class="feat-card reveal">
+          <div class="feat-icon-wrap teal-icon">❤️</div>
+          <h3>Patient Preference Matching</h3>
+          <p>Patients can rate caregivers and set preferences. The AI prioritizes matches based on shared history, satisfaction scores, and personal compatibility.</p>
+          <div class="feat-tag">Coming Soon</div>
+        </div>
+
+        <div class="feat-card feat-large reveal">
+          <div class="feat-icon-wrap amber-icon">📊</div>
+          <h3>Financial Management</h3>
+          <p>Real-time revenue and expense tracking, payroll prep, and invoice management — giving agency owners a clear financial picture without the spreadsheet chaos.</p>
+          <ul class="feat-list">
+            <li>Revenue & expense tracking</li>
+            <li>Payroll preparation</li>
+            <li>Cash flow visibility</li>
+          </ul>
+          <div class="feat-tag">V2 Roadmap</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ─────────────────────────────────────────────────────── -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header centered">
+        <div class="pill pill-teal">How It Works</div>
+        <h2>Up and Running in 15 Minutes</h2>
+        <p class="section-sub">No technical skills required. No lengthy onboarding. Just connect, configure, and let OptimaVia handle the rest.</p>
+      </div>
+
+      <div class="steps-wrap">
+        <div class="steps-line"></div>
+        <div class="steps-grid">
+          <div class="step reveal">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <h4>Connect Your Accounts</h4>
+              <p>Link your existing payroll, scheduling tools, and job boards in minutes. OptimaVia integrates with QuickBooks, Gusto, ADP, Indeed, and more.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <h4>Import Your Team</h4>
+              <p>Upload your caregiver database or sync from your existing system. Add certifications, availability, and service areas for each team member.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <h4>AI Learns Your Business</h4>
+              <p>OptimaVia builds a model of your agency — shift patterns, patient needs, caregiver strengths, and seasonal demand — getting smarter every week.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <h4>Automate & Optimize</h4>
+              <p>Sit back while OptimaVia fills shifts, sends notifications, tracks reliability, and alerts you to risks — before they become missed visits.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results bar -->
+      <div class="results-bar reveal">
+        <div class="result-item">
+          <div class="result-num">70%</div>
+          <div class="result-lbl">Less coordinator time<br>on scheduling</div>
+        </div>
+        <div class="result-divider"></div>
+        <div class="result-item">
+          <div class="result-num">18h</div>
+          <div class="result-lbl">Saved per week<br>on average</div>
+        </div>
+        <div class="result-divider"></div>
+        <div class="result-item">
+          <div class="result-num">94%</div>
+          <div class="result-lbl">Shift coverage<br>rate achieved</div>
+        </div>
+        <div class="result-divider"></div>
+        <div class="result-item">
+          <div class="result-num">3×</div>
+          <div class="result-lbl">Faster to fill<br>open roles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ──────────────────────────────────────────────────────────── -->
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header centered">
+        <div class="pill pill-amber">Pricing</div>
+        <h2>Simple, Predictable Pricing</h2>
+        <p class="section-sub">No per-shift fees. No surprises. Pay a flat monthly rate and focus on care — not costs.</p>
+      </div>
+
+      <div class="price-grid">
+        <div class="price-card reveal">
+          <div class="price-tier">Starter</div>
+          <div class="price-amount"><span class="price-dollar">$</span>299<span class="price-per">/mo</span></div>
+          <div class="price-desc">Up to 30 caregivers</div>
+          <ul class="price-features">
+            <li>✓ Intelligent shift matching</li>
+            <li>✓ Real-time mobile alerts</li>
+            <li>✓ Caregiver reliability ratings</li>
+            <li>✓ Coordinator dashboard</li>
+            <li>✓ Basic analytics</li>
+            <li>✓ Email support</li>
+          </ul>
+          <a href="#waitlist" class="btn-outline">Join Beta Waitlist</a>
+        </div>
+
+        <div class="price-card price-featured reveal">
+          <div class="price-badge">Most Popular</div>
+          <div class="price-tier">Growth</div>
+          <div class="price-amount"><span class="price-dollar">$</span>499<span class="price-per">/mo</span></div>
+          <div class="price-desc">Up to 75 caregivers</div>
+          <ul class="price-features">
+            <li>✓ Everything in Starter</li>
+            <li>✓ Predictive staffing intelligence</li>
+            <li>✓ Patient preference matching</li>
+            <li>✓ Advanced analytics & reports</li>
+            <li>✓ Hiring integrations (Indeed, ZipRecruiter)</li>
+            <li>✓ Priority support</li>
+          </ul>
+          <a href="#waitlist" class="btn-primary">Join Beta Waitlist</a>
+        </div>
+
+        <div class="price-card reveal">
+          <div class="price-tier">Enterprise</div>
+          <div class="price-amount" style="font-size:2.2rem; padding-top:0.5rem">Custom</div>
+          <div class="price-desc">75+ caregivers / Multi-location</div>
+          <ul class="price-features">
+            <li>✓ Everything in Growth</li>
+            <li>✓ Financial management module</li>
+            <li>✓ White-label options</li>
+            <li>✓ Custom integrations</li>
+            <li>✓ Dedicated account manager</li>
+            <li>✓ SLA guarantee</li>
+          </ul>
+          <a href="/cdn-cgi/l/email-protection#6a020f0606052a051a1e03070b1c030b44090507" class="btn-outline">Contact Us</a>
+        </div>
+      </div>
+
+      <p class="price-note">🎉 <strong>Beta offer:</strong> First 100 agencies get 3 months free. No credit card required to join the waitlist.</p>
+    </div>
+  </section>
+
+  <!-- ── VISION ───────────────────────────────────────────────────────────── -->
+  <section class="vision-section" id="vision">
+    <div class="container">
+      <div class="section-header centered">
+        <div class="pill pill-purple">Our Vision</div>
+        <h2 style="color:#fff">Beyond Home Care</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.6)">We're starting with home care agencies — but OptimaVia is built to make work seamless for small businesses everywhere.</p>
+      </div>
+      <div class="vision-grid">
+        <div class="vision-card reveal">
+          <div class="vision-icon">🏥</div>
+          <h4>V1 — Home Care</h4>
+          <p class="vision-status active-status">Active Now</p>
+          <p>AI-powered scheduling, shift matching, and caregiver management for home health agencies across the United States.</p>
+        </div>
+        <div class="vision-card reveal">
+          <div class="vision-icon">🏭</div>
+          <h4>V2 — Light Manufacturing</h4>
+          <p class="vision-status coming-status">2026–2027</p>
+          <p>Workforce and production scheduling for small manufacturers — the next highest-pain industry for shift management.</p>
+        </div>
+        <div class="vision-card reveal">
+          <div class="vision-icon">🌍</div>
+          <h4>Global — Ghana Agriculture</h4>
+          <p class="vision-status future-status">2027–2028</p>
+          <p>Helping African smallholder farmers track revenue, schedule tasks, and build the financial data they need to access capital and grow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ────────────────────────────────────────────────────────────── -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <div class="pill pill-teal">About the Founder</div>
+          <h2>Built by someone who<br><em>understands the problem.</em></h2>
+          <p>OptimaVia was born from a deep frustration with how small businesses — particularly in care — are forced to operate with tools designed for enterprises, or worse, no tools at all.</p>
+          <p>We believe that the people doing the hardest, most human work in our society deserve operations software as thoughtful as the care they provide.</p>
+          <div class="about-values">
+            <div class="value-item">
+              <div class="value-icon">🎯</div>
+              <div>
+                <strong>Laser-focused</strong>
+                <p>We solve one problem deeply before expanding. V1 is entirely about home care scheduling.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon">🤝</div>
+              <div>
+                <strong>Agency-first</strong>
+                <p>Every feature is built in direct conversation with agency owners and coordinators.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon">🌍</div>
+              <div>
+                <strong>Global ambition</strong>
+                <p>We're starting in the US but building toward emerging markets where the need is even greater.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-card-wrap reveal">
+          <div class="founder-card">
+            <div class="founder-avatar">OV</div>
+            <div class="founder-info">
+              <div class="founder-name">OptimaVia Team</div>
+              <div class="founder-title">Founders & Builders</div>
+            </div>
+            <div class="founder-quote">
+              "We didn't build another scheduling app. We built a co-pilot for the people keeping families together."
+            </div>
+            <div class="founder-tags">
+              <span>Healthcare Ops</span>
+              <span>AI / ML</span>
+              <span>SaaS</span>
+              <span>Interplay Fellows</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WAITLIST ──────────────────────────────────────────────────────────── -->
+  <section class="waitlist-section" id="waitlist">
+    <div class="waitlist-bg">
+      <div class="wl-orb wl-orb1"></div>
+      <div class="wl-orb wl-orb2"></div>
+    </div>
+    <div class="container">
+      <div class="waitlist-inner">
+        <div class="wl-copy reveal">
+          <div class="pill pill-mint">Beta Access</div>
+          <h2>Be Among the First<br><em>100 Agencies.</em></h2>
+          <p>Join our beta and get 3 months of free access, direct input into the product roadmap, and a dedicated onboarding session with our founders.</p>
+          <div class="wl-perks">
+            <div class="wl-perk">✓ 3 months completely free</div>
+            <div class="wl-perk">✓ Priority onboarding</div>
+            <div class="wl-perk">✓ Direct access to founders</div>
+            <div class="wl-perk">✓ Shape the product roadmap</div>
+            <div class="wl-perk">✓ Locked-in beta pricing forever</div>
+            <div class="wl-perk">✓ No credit card required</div>
+          </div>
+          <div class="wl-urgency">
+            <div class="urgency-bar">
+              <div class="urgency-fill" style="width: 62%"></div>
+            </div>
+            <p class="urgency-text">62 of 100 beta spots claimed</p>
+          </div>
+        </div>
+
+        <div class="wl-form-wrap reveal">
+          <form class="wl-form" id="waitlist-form" onsubmit="handleWaitlist(event)">
+            <h3>Reserve Your Spot</h3>
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" placeholder="Jane Smith" required>
+            </div>
+            <div class="form-group">
+              <label>Agency Name</label>
+              <input type="text" placeholder="Sunrise Home Care LLC" required>
+            </div>
+            <div class="form-group">
+              <label>Work Email</label>
+              <input type="email" placeholder="jane@sunrisehomecare.com" required>
+            </div>
+            <div class="form-group">
+              <label>Number of Caregivers</label>
+              <select>
+                <option value="">Select a range</option>
+                <option>1–10 caregivers</option>
+                <option>11–30 caregivers</option>
+                <option>31–75 caregivers</option>
+                <option>75+ caregivers</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary full-width">
+              Claim My Beta Spot →
+            </button>
+            <p class="form-note">🔒 We respect your privacy. No spam, ever.</p>
+          </form>
+          <div class="wl-success" id="wl-success">
+            <div class="success-icon">🎉</div>
+            <h3>You're on the list!</h3>
+            <p>We'll be in touch shortly with next steps. Welcome to the OptimaVia family.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo">Optima<span>Via</span></div>
+        <p>Making work seamless for the people who care for our families.</p>
+        <div class="footer-socials">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="/cdn-cgi/l/email-protection#452d2029292a052a35312c2824332c246b262a28"><span class="__cf_email__" data-cfemail="59313c3535361936292d3034382f3038773a3634">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="footer-links-group">
+        <h5>Product</h5>
+        <a href="#solution">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#vision">Roadmap</a>
+      </div>
+      <div class="footer-links-group">
+        <h5>Company</h5>
+        <a href="#about">About</a>
+        <a href="#waitlist">Join Beta</a>
+        <a href="/cdn-cgi/l/email-protection#2a424f4646456a455a5e43474b5c434b04494547">Contact</a>
+      </div>
+      <div class="footer-links-group">
+        <h5>Legal</h5>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <s
+        <span>© 2025 OptimaVia, Inc. All rights reserved.</span>
+        <span>Built with ❤️ for home care agencies everywhere.</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+// ── Nav scroll shadow ─────────────────────────────────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── Mobile menu ───────────────────────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      // Stagger siblings in same parent
+      const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+      const idx = siblings.indexOf(entry.target);
+      entry.target.style.transitionDelay = `${idx * 0.08}s`;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// ── Smooth anchor scroll ──────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    const offset = 80;
+    window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+  });
+});
+
+// ── Waitlist form ─────────────────────────────────────────────────────────
+function handleWaitlist(e) {
+  e.preventDefault();
+  const form    = document.getElementById('waitlist-form');
+  const success = document.getElementById('wl-success');
+  form.style.opacity = '0';
+  form.style.transform = 'scale(0.97)';
+  form.style.transition = 'opacity 0.3s, transform 0.3s';
+  setTimeout(() => {
+    form.style.display = 'none';
+    success.classList.add('show');
+    success.style.opacity = '0';
+    success.style.transform = 'scale(0.97)';
+    success.style.transition = 'opacity 0.3s, transform 0.3s';
+    requestAnimationFrame(() => {
+      success.style.opacity = '1';
+      success.style.transform = 'scale(1)';
+    });
+  }, 300);
+}
+
+// ── Urgency bar animate on scroll ────────────────────────────────────────
+const urgencyFill = document.querySelector('.urgency-fill');
+if (urgencyFill) {
+  urgencyFill.style.width = '0%';
+  const urgencyObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      setTimeout(() => { urgencyFill.style.width = '62%'; }, 300);
+      urgencyObserver.disconnect();
+    }
+  }, { threshold: 0.5 });
+  urgencyObserver.observe(urgencyFill);
+}
+
+// ── Active nav link on scroll ─────────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navAnchors.forEach(a => {
+    a.style.color = a.getAttribute('href') === `#${current}`
+      ? 'white' : '';
+  });
+}, { passive: true });
+
+  </script>
+</body>
+</html>
